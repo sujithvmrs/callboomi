@@ -1,0 +1,30 @@
+var http = require("https");
+
+var options = {
+  "method": "POST",
+  "hostname": "api.boomi.com",
+  "port": null,
+  "path": "/api/rest/v1/wiprotechnologies-4T808Z/executeProcess",
+  "headers": {
+    "authorization": "Basic c3VqaXRoLjU5QHdpcHJvLmNvbTpXaXByb0AxMjM=",
+    "content-type": "text/xml",
+    "cache-control": "no-cache",
+    "postman-token": "04b404e9-75d6-01ff-9bec-340e36dfd0c0"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.write("<ProcessExecutionRequest processId=\"fa874f36-9854-4616-8154-e08a15ef0a37\" atomId=\"6e282349-5952-4f21-8966-859f6d515503\" xmlns=\"http://api.platform.boomi.com/\">\r\n    <ProcessProperties>\r\n        <ProcessProperty>\r\n            <Name>priority</Name>\r\n            <Value>medium</Value>\r\n        </ProcessProperty>\r\n    </ProcessProperties>\r\n</ProcessExecutionRequest>");
+req.end();
